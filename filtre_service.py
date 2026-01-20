@@ -1,0 +1,51 @@
+import pandas as pd
+from pathlib import Path
+import datetime
+
+
+def filter_ocorrencias():
+    hoje = datetime.date.today
+
+    PATH_CWD = Path.cwd()
+    PATH_DOWNLOADS = PATH_CWD / 'src' / 'downloads'
+    PATH_DOWNLOADS.mkdir(parents=True, exist_ok=True)
+
+    PATH_OCORRENCIAS = PATH_DOWNLOADS / 'ocorrenciasSF3.xls'
+    NOME_DA_ABA_ALVO = 'JANEIRO 2026'
+    COLUNA_DATA_REAL = 'Data'
+    COLUNA_CONTRATO = 'Contrato'
+
+    #le excel
+    df_ocorrencias = pd.read_excel(
+        PATH_OCORRENCIAS,
+        sheet_name=NOME_DA_ABA_ALVO,
+        header=0
+    )
+
+    #filtra data
+    df_ocorrencias.dropna(subset=[COLUNA_DATA_REAL], inplace=True)
+    df_ocorrencias[COLUNA_DATA_REAL] = pd.to_datetime(
+        df_ocorrencias[COLUNA_DATA_REAL],
+        errors='coerce'
+    )
+    print("Data filtrada com sucesso.")
+
+    #filtra os contratos
+    ocorrencias_de_hoje = (
+        df_ocorrencias
+        .loc[df_ocorrencias[COLUNA_DATA_REAL].dt.date == hoje]
+        .loc[lambda df: ~df.duplicated(subset=COLUNA_CONTRATO, keep=False)]
+    )
+    print("Contratos filtrados com sucesso.")
+
+    #gera excel
+    path_excel = PATH_DOWNLOADS / "ocorrencias_filtradas.xlsx"
+    ocorrencias_de_hoje.to_excel(path_excel, index=False)
+    print("Arquivo Excel gerado com sucesso.")
+
+    #formata data p chata da sabrina
+    df_html = ocorrencias_de_hoje.copy()
+    df_html['Data'] = df_html['Data'].dt.strftime('%d/%m/%Y')
+    print("Data formatada para chata da Sabrina.")
+
+    return df_html, path_excel
