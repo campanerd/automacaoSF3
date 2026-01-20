@@ -5,6 +5,13 @@ from dotenv import load_dotenv
 
 
 def generate_html(df):
+    if df.empty:
+        print("Nenhum contrato encontrado para o dia de hoje.")
+
+        return """
+        <p><b>Não há contratos para tratamento na data de hoje.</b></p>
+        """
+
     tabela = df.to_html(index=False, border=1, justify="center")
 
     estilo = """
@@ -26,10 +33,8 @@ def generate_html(df):
     </style>
     """
 
-    
+    print("Contratos encontrados e tabela HTML gerada.")
     return estilo + tabela
-
-
 
 
 def send_email(html, anexo):
