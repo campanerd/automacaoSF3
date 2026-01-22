@@ -4,7 +4,15 @@ import datetime
 from dotenv import load_dotenv
 
 
+
 def generate_html(df):
+
+
+    print("DEBUG DF:")
+    print(df)
+    print("Quantidade de linhas:", len(df))
+    print("Está vazio?", df.empty)
+
     if df.empty:
         print("Nenhum contrato encontrado para o dia de hoje.")
 

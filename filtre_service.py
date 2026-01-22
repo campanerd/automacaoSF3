@@ -4,7 +4,7 @@ import datetime
 
 
 def filter_ocorrencias():
-    hoje = datetime.date.today
+    hoje = datetime.date.today()
 
     PATH_CWD = Path.cwd()
     PATH_DOWNLOADS = PATH_CWD / 'src' / 'downloads'
