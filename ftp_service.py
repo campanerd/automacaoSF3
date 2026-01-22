@@ -1,12 +1,11 @@
 import paramiko
-import os
-from dotenv import load_dotenv
+from pathlib import Path
 import datetime
+
+from dotenv import load_dotenv
+import os
 load_dotenv()
 
-
-from pathlib import Path
-from dotenv import load_dotenv
 
 def down_ocorrencias():
     
