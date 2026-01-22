@@ -2,7 +2,7 @@ import win32com.client as win32
 import os
 import datetime
 from dotenv import load_dotenv
-
+load_dotenv()
 
 
 def generate_html(df):

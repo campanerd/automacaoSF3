@@ -2,6 +2,7 @@ import paramiko
 import os
 from dotenv import load_dotenv
 import datetime
+load_dotenv()
 
 
 from pathlib import Path
