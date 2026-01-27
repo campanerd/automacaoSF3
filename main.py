@@ -41,4 +41,5 @@ if __name__ == "__main__":
     
     while True:
         schedule.run_pending()
+        print("Agendador iniciado. Aguardando execução às 19:00...")
         time.sleep(60)
