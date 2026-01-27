@@ -29,6 +29,9 @@ def main():
         except Exception as e:
             print(f"Erro ao remover {arquivo.name}: {e}")
 
+    print("Agendador iniciado novamente. Aguardando execução às 19:00...")
+
+
 
 if __name__ == "__main__":
     schedule.every().monday.at("19:00").do(main)
@@ -41,5 +44,4 @@ if __name__ == "__main__":
     
     while True:
         schedule.run_pending()
-        print("Agendador iniciado. Aguardando execução às 19:00...")
         time.sleep(60)
