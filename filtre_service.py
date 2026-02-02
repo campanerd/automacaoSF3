@@ -81,4 +81,20 @@ def filter_ocorrencias():
     df_html['Data'] = df_html['Data'].dt.strftime('%d/%m/%Y')
     print("Data formatada para chata da Sabrina.")
 
+        #salva no historico os contratos enviados
+    if not ocorrencias_de_hoje.empty:
+        df_novos = pd.DataFrame({
+            "Contrato": ocorrencias_de_hoje[COLUNA_CONTRATO].astype(str),
+            "Data_Ocorrencia": ocorrencias_de_hoje[COLUNA_DATA_REAL].dt.date.astype(str),
+            "Data_Envio": hoje.strftime("%Y-%m-%d")
+        })
+
+        df_historico = pd.concat([df_historico, df_novos], ignore_index=True)
+        df_historico.to_csv(PATH_HISTORICO, index=False)
+
+        print("Histórico atualizado com sucesso.")
+    else:
+        print("Nenhuma ocorrência nova para salvar no histórico.")
+
+
     return df_html, path_excel
