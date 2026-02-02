@@ -15,28 +15,14 @@ def down_ocorrencias():
     DOWNLOADS_DIR = BASE_DIR / "src" / "downloads"
     DOWNLOADS_DIR.mkdir(parents=True, exist_ok=True)
 
-
-
     # Dados do servidor
     SFTP_HOST = os.getenv("FTP_HOST")
     SFTP_USER = os.getenv("FTP_USER")
     SFTP_PASS = os.getenv("FTP_PASS")
     SFTP_PORT = int(os.getenv("FTP_PORT", 22))
 
-    meses_pt = {
-        1: "Janeiro", 2: "Fevereiro", 3: "Março",
-        4: "Abril", 5: "Maio", 6: "Junho",
-        7: "Julho", 8: "Agosto", 9: "Setembro",
-        10: "Outubro", 11: "Novembro", 12: "Dezembro"
-    }
-
-    data_ref = datetime.date.today()
-
-    mes = meses_pt[data_ref.month]
-    ano = data_ref.year
-
     # caminho
-    ARQUIVO_REMOTO = f"/arquivos/OCORRENCIAS SAC/Ocorrências - {mes} {ano}.xls"
+    ARQUIVO_REMOTO = f"/arquivos/OCORRENCIAS SAC/Ocorrências - Janeiro 2026.xls"
     ARQUIVO_LOCAL = DOWNLOADS_DIR / "ocorrenciasSF3.xls"
 
     print("Arquivo remoto:", ARQUIVO_REMOTO)
