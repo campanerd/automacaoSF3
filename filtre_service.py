@@ -13,7 +13,17 @@ def filter_ocorrencias():
     PATH_OCORRENCIAS = PATH_DOWNLOADS / 'ocorrenciasSF3.xls'
     PATH_HISTORICO = PATH_DOWNLOADS / "historico_processados.csv"
 
-    NOME_DA_ABA_ALVO = 'JANEIRO 2026'
+    meses_pt = {
+    1: "JANEIRO", 2: "FEVEREIRO", 3: "MARÇO",
+    4: "ABRIL", 5: "MAIO", 6: "JUNHO",
+    7: "JULHO", 8: "AGOSTO", 9: "SETEMBRO",
+    10: "OUTUBRO", 11: "NOVEMBRO", 12: "DEZEMBRO"
+    }
+
+    mes_atual = meses_pt[hoje.month]
+    ano_atual = hoje.year
+
+    NOME_DA_ABA_ALVO = f"{mes_atual} {ano_atual}"
     COLUNA_DATA_REAL = 'Data'
     COLUNA_CONTRATO = 'Contrato'
 

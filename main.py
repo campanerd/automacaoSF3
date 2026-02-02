@@ -38,7 +38,7 @@ def main():
 
 
 if __name__ == "__main__":
-    schedule.every().monday.at("19:00").do(main)
+    schedule.every().monday.at("18:55").do(main)
     schedule.every().tuesday.at("19:00").do(main)
     schedule.every().wednesday.at("19:00").do(main)
     schedule.every().thursday.at("19:00").do(main)
