@@ -4,7 +4,7 @@ import datetime
 
 
 def filter_ocorrencias():
-    hoje = datetime.date.today()
+    hoje = datetime.date(2026, 1, 29)
 
     PATH_CWD = Path.cwd()
     PATH_DOWNLOADS = PATH_CWD / 'src' / 'downloads'
@@ -63,11 +63,10 @@ def filter_ocorrencias():
 
     #filtro finalizado
     ocorrencias_de_hoje = (
-        df_ocorrencias
-        .loc[df_ocorrencias[COLUNA_DATA_REAL].dt.date == hoje]
-        .loc[~df_ocorrencias["CHAVE"].isin(df_historico.get("CHAVE", []))]
-        .loc[lambda df: ~df.duplicated(subset=COLUNA_CONTRATO, keep=False)]
-    )
+    ocorrencias_de_hoje
+    .loc[~ocorrencias_de_hoje["CHAVE"].isin(df_historico.get("CHAVE", []))]
+)
+
 
     print("Contratos filtrados com sucesso.")
 

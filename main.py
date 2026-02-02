@@ -1,6 +1,6 @@
 from pathlib import Path
 from filtre_service import filter_ocorrencias
-from ftp_service import down_ocorrencias
+from sftp_service import down_ocorrencias
 from email_service import generate_html, send_email
 import schedule
 import time
