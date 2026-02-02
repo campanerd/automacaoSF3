@@ -11,9 +11,21 @@ def filter_ocorrencias():
     PATH_DOWNLOADS.mkdir(parents=True, exist_ok=True)
 
     PATH_OCORRENCIAS = PATH_DOWNLOADS / 'ocorrenciasSF3.xls'
+    PATH_HISTORICO = PATH_DOWNLOADS / "historico_processados.csv"
+
     NOME_DA_ABA_ALVO = 'JANEIRO 2026'
     COLUNA_DATA_REAL = 'Data'
     COLUNA_CONTRATO = 'Contrato'
+
+    #histótico 
+    if PATH_HISTORICO.exists():
+        df_historico = pd.read_csv(PATH_HISTORICO)
+    else:
+        df_historico = pd.DataFrame(
+            columns=["Contrato", "Data_Ocorrencia", "Data_Envio"]
+        )
+
+    print("Linhas no histórico:", len(df_historico))
 
     #le excel
     df_ocorrencias = pd.read_excel(
@@ -30,12 +42,33 @@ def filter_ocorrencias():
     )
     print("Data filtrada com sucesso.")
 
-    #filtra os contratos
+    #criando a chave
+    df_ocorrencias[COLUNA_CONTRATO] = df_ocorrencias[COLUNA_CONTRATO].astype(str)
+
+    df_ocorrencias["Data_Key"] = (
+        df_ocorrencias[COLUNA_DATA_REAL].dt.date.astype(str)
+    )
+
+    df_ocorrencias["CHAVE"] = (
+        df_ocorrencias[COLUNA_CONTRATO] + "_" + df_ocorrencias["Data_Key"]
+    )
+
+    if not df_historico.empty:
+        df_historico["CHAVE"] = (
+            df_historico["Contrato"].astype(str)
+            + "_"
+            + df_historico["Data_Ocorrencia"].astype(str)
+        )
+
+
+    #filtro finalizado
     ocorrencias_de_hoje = (
         df_ocorrencias
         .loc[df_ocorrencias[COLUNA_DATA_REAL].dt.date == hoje]
+        .loc[~df_ocorrencias["CHAVE"].isin(df_historico.get("CHAVE", []))]
         .loc[lambda df: ~df.duplicated(subset=COLUNA_CONTRATO, keep=False)]
     )
+
     print("Contratos filtrados com sucesso.")
 
     #gera excel
