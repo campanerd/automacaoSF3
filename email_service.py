@@ -51,7 +51,7 @@ def send_email(html, anexo):
     hoje = datetime.date.today()
 
     EMAIL_TO = os.getenv("EMAIL_TO")
-    EMAIL_CC = os.getenv("EMAIL_CC")
+    #EMAIL_CC = os.getenv("EMAIL_CC")
 
     if not EMAIL_TO:
         raise ValueError("Variável EMAIL_TO não definida")
@@ -63,7 +63,7 @@ def send_email(html, anexo):
     mail.Display()
 
     mail.To = EMAIL_TO
-    mail.CC = EMAIL_CC or ""
+    #mail.CC = EMAIL_CC or ""
 
     mail.HTMLBody = f"""
     <p>Boa noite Camila,</p>

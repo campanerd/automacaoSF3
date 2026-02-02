@@ -19,8 +19,14 @@ def main():
     else:
         html = generate_html(df)
 
-    # checa se email foi enviado correto
-    send_email(html, anexo)
+    print("\nPré-visualização pronta.")
+    confirmacao = input("Deseja enviar o e-mail agora? (s/n): ").strip().lower()
+
+    if confirmacao == "s":
+        send_email(html, anexo)
+        print("E-mail enviado com sucesso.")
+    else:
+        print("Envio de e-mail cancelado pelo usuário.")
 
     # limpando aquivos downloads
     downloads = Path.cwd() / "src" / "downloads"
@@ -38,7 +44,7 @@ def main():
 
 
 if __name__ == "__main__":
-    schedule.every().monday.at("18:55").do(main)
+    schedule.every().monday.at("19:11").do(main)
     schedule.every().tuesday.at("19:00").do(main)
     schedule.every().wednesday.at("19:00").do(main)
     schedule.every().thursday.at("19:00").do(main)

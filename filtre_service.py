@@ -83,6 +83,18 @@ def filter_ocorrencias():
 
     print("Contratos filtrados com sucesso.")
 
+    # remove contratos que aparecem mais de uma vez no mesmo dia
+    contagem_contratos = (ocorrencias_de_hoje.groupby(COLUNA_CONTRATO).size())
+
+    contratos_unicos = contagem_contratos[
+        contagem_contratos == 1
+        ].index
+
+    ocorrencias_de_hoje = ocorrencias_de_hoje[ocorrencias_de_hoje[COLUNA_CONTRATO].isin(contratos_unicos)]
+
+    print("Contratos duplicados no dia removidos com sucesso.")
+
+
     #gera excel
     path_excel = PATH_DOWNLOADS / "ocorrencias_filtradas.xlsx"
     ocorrencias_de_hoje.to_excel(path_excel, index=False)
@@ -93,7 +105,7 @@ def filter_ocorrencias():
     df_html['Data'] = df_html['Data'].dt.strftime('%d/%m/%Y')
     print("Data formatada para chata da Sabrina.")
 
-        #salva no historico os contratos enviados
+    #salva no historico os contratos enviados
     if not ocorrencias_de_hoje.empty:
         df_novos = pd.DataFrame({
             "Contrato": ocorrencias_de_hoje[COLUNA_CONTRATO].astype(str),
