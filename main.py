@@ -1,6 +1,6 @@
 from pathlib import Path
 from filtre_service import filter_ocorrencias
-from sftp_service import down_ocorrencias
+from ftp_service import down_ocorrencias
 from email_service import generate_html, send_email
 import schedule
 import time
@@ -14,7 +14,10 @@ def main():
 
     df, anexo = filter_ocorrencias()
 
-    html = generate_html(df)
+    if df.empty:
+        html = "<p><strong>Não há ocorrências novas para o dia de hoje.</strong></p>"
+    else:
+        html = generate_html(df)
 
     # checa se email foi enviado correto
     send_email(html, anexo)
@@ -23,13 +26,14 @@ def main():
     downloads = Path.cwd() / "src" / "downloads"
 
     for arquivo in downloads.glob("*"):
-        try:
-            arquivo.unlink()
-            print(f"Removido: {arquivo.name}")
-        except Exception as e:
-            print(f"Erro ao remover {arquivo.name}: {e}")
+        if arquivo.name != "historico_processados.csv":
+            try:
+                arquivo.unlink()
+                print(f"Removido: {arquivo.name}")
+            except Exception as e:
+                print(f"Erro ao remover {arquivo.name}: {e}")
 
-    print("Agendador iniciado novamente. Aguardando execução às 19:00...")
+    print("Execução finalizada com sucesso.")
 
 
 
