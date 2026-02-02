@@ -70,7 +70,6 @@ def filter_ocorrencias():
             + df_historico["Data_Ocorrencia"].astype(str)
         )
 
-
     #filtro finalizado
     ocorrencias_de_hoje = df_ocorrencias[
         df_ocorrencias[COLUNA_DATA_REAL].dt.date == hoje
@@ -93,7 +92,6 @@ def filter_ocorrencias():
     ocorrencias_de_hoje = ocorrencias_de_hoje[ocorrencias_de_hoje[COLUNA_CONTRATO].isin(contratos_unicos)]
 
     print("Contratos duplicados no dia removidos com sucesso.")
-
 
     #gera excel
     path_excel = PATH_DOWNLOADS / "ocorrencias_filtradas.xlsx"
