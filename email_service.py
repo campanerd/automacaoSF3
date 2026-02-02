@@ -1,4 +1,5 @@
 import win32com.client as win32
+from pathlib import Path
 import datetime
 from dotenv import load_dotenv
 import os
@@ -67,15 +68,17 @@ def send_email(html, anexo):
     mail.HTMLBody = f"""
     <p>Boa noite Camila,</p>
 
-    <p>Seguem abaixo as ocorrências do dia
-    <b>{hoje.strftime('%d/%m/%Y')}</b> que devem ser tratadas:</p>
+    <p>Seguem abaixo o resultado do monitoramento do dia
+    <b>{hoje.strftime('%d/%m/%Y')}</b>:</p>
 
     {html}
 
     <p>Qualquer dúvida, fico à disposição.</p>
     """ + mail.HTMLBody
 
-    mail.Attachments.Add(str(anexo))
+    if anexo and Path(anexo).exists():
+        mail.Attachments.Add(str(anexo))
+
     print("Enviando email...")
     mail.Send()
     print("Email enviado com sucesso!")
