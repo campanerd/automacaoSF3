@@ -71,37 +71,31 @@ def filter_ocorrencias():
         )
 
     #filtro finalizado
-    ocorrencias_de_hoje = df_ocorrencias[
-        df_ocorrencias[COLUNA_DATA_REAL].dt.date == hoje
+    ocorrencias_novas = df_ocorrencias[
+        ~df_ocorrencias["CHAVE"].isin(df_historico.get("CHAVE", []))
     ]
 
-    ocorrencias_de_hoje = (
-        ocorrencias_de_hoje
-        .loc[~ocorrencias_de_hoje["CHAVE"].isin(df_historico.get("CHAVE", []))]
-    )
+    contagem = (ocorrencias_novas.groupby([COLUNA_CONTRATO, "Data_Key"]).size())
+
+    chaves_validas = contagem[contagem == 1].index
+
+    ocorrencias_filtradas = ocorrencias_novas[
+        ocorrencias_novas.set_index([COLUNA_CONTRATO, "Data_Key"])
+        .index.isin(chaves_validas)
+    ].reset_index(drop=True)
+
 
     print("Contratos filtrados com sucesso.")
 
-    ocorrencias_para_historico = ocorrencias_de_hoje.copy()
-
-    # remove contratos que aparecem mais de uma vez no mesmo dia
-    contagem_contratos = (ocorrencias_de_hoje.groupby(COLUNA_CONTRATO).size())
-
-    contratos_unicos = contagem_contratos[
-        contagem_contratos == 1
-        ].index
-
-    ocorrencias_de_hoje = ocorrencias_de_hoje[ocorrencias_de_hoje[COLUNA_CONTRATO].isin(contratos_unicos)]
-
-    print("Contratos duplicados no dia removidos com sucesso.")
+    ocorrencias_para_historico = ocorrencias_novas.copy()
 
     #gera excel
     path_excel = PATH_DOWNLOADS / "ocorrencias_filtradas.xlsx"
-    ocorrencias_de_hoje.to_excel(path_excel, index=False)
+    ocorrencias_filtradas.to_excel(path_excel, index=False)
     print("Arquivo Excel gerado com sucesso.")
 
     #formata data p chata da sabrina
-    df_html = ocorrencias_de_hoje.copy()
+    df_html = ocorrencias_filtradas.copy()
     df_html['Data'] = df_html['Data'].dt.strftime('%d/%m/%Y')
     print("Data formatada para chata da Sabrina.")
 
@@ -112,6 +106,8 @@ def filter_ocorrencias():
             "Data_Ocorrencia": ocorrencias_para_historico[COLUNA_DATA_REAL].dt.date.astype(str),
             "Data_Envio": hoje.strftime("%Y-%m-%d")
         })
+
+        df_novos = df_novos.drop_duplicates(subset=["Contrato", "Data_Ocorrencia"])
 
         df_historico = pd.concat([df_historico, df_novos], ignore_index=True)
         df_historico.to_csv(PATH_HISTORICO, index=False)
