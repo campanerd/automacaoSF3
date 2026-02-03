@@ -27,8 +27,8 @@ def filter_ocorrencias():
     COLUNA_DATA_REAL = 'Data'
     COLUNA_CONTRATO = 'Contrato'
 
-    #histótico 
-    if PATH_HISTORICO.exists():
+    # histórico
+    if PATH_HISTORICO.exists() and PATH_HISTORICO.stat().st_size > 0:
         df_historico = pd.read_csv(PATH_HISTORICO)
     else:
         df_historico = pd.DataFrame(
@@ -82,6 +82,8 @@ def filter_ocorrencias():
 
     print("Contratos filtrados com sucesso.")
 
+    ocorrencias_para_historico = ocorrencias_de_hoje.copy()
+
     # remove contratos que aparecem mais de uma vez no mesmo dia
     contagem_contratos = (ocorrencias_de_hoje.groupby(COLUNA_CONTRATO).size())
 
@@ -104,10 +106,10 @@ def filter_ocorrencias():
     print("Data formatada para chata da Sabrina.")
 
     #salva no historico os contratos enviados
-    if not ocorrencias_de_hoje.empty:
+    if not ocorrencias_para_historico.empty:
         df_novos = pd.DataFrame({
-            "Contrato": ocorrencias_de_hoje[COLUNA_CONTRATO].astype(str),
-            "Data_Ocorrencia": ocorrencias_de_hoje[COLUNA_DATA_REAL].dt.date.astype(str),
+            "Contrato": ocorrencias_para_historico[COLUNA_CONTRATO].astype(str),
+            "Data_Ocorrencia": ocorrencias_para_historico[COLUNA_DATA_REAL].dt.date.astype(str),
             "Data_Envio": hoje.strftime("%Y-%m-%d")
         })
 
