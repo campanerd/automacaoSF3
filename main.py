@@ -20,14 +20,7 @@ def main():
         html = generate_html(df)
 
     print("\nPré-visualização pronta.")
-    confirmacao = input("Deseja enviar o e-mail agora? (s/n): ").strip().lower()
-
-    if confirmacao == "s":
-        send_email(html, anexo)
-        print("E-mail enviado com sucesso.")
-    else:
-        print("Envio de e-mail cancelado pelo usuário.")
-
+    
     # limpando aquivos downloads
     downloads = Path.cwd() / "src" / "downloads"
 
@@ -43,11 +36,11 @@ def main():
 
 
 if __name__ == "__main__":
-    schedule.every().monday.at("19:00").do(main)
-    schedule.every().tuesday.at("19:04").do(main)
-    schedule.every().wednesday.at("19:00").do(main)
-    schedule.every().thursday.at("19:00").do(main)
-    schedule.every().friday.at("19:00").do(main)
+    schedule.every().monday.at("18:30").do(main)
+    schedule.every().tuesday.at("18:30").do(main)
+    schedule.every().wednesday.at("18:30").do(main)
+    schedule.every().thursday.at("18:30").do(main)
+    schedule.every().friday.at("18:30").do(main)
 
     print("Agendador iniciado. Aguardando execução às 19:00...")
     

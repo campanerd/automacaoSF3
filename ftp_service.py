@@ -1,6 +1,5 @@
 import paramiko
 from pathlib import Path
-import datetime
 
 from dotenv import load_dotenv
 import os
