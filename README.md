@@ -1,22 +1,30 @@
 # Automação de Ocorrências SAC – SF3
 
-Este projeto foi desenvolvido para automatizar o processo diário de coleta, filtragem e envio de ocorrências SAC, eliminando tarefas manuais e reduzindo erros operacionais. A automação realiza a integração entre um servidor SFTP, arquivos Excel e o Microsoft Outlook, garantindo que as ocorrências do dia sejam tratadas e encaminhadas de forma padronizada e confiável.
+Este projeto automatiza o processo diário de coleta, validação, rastreio e envio de ocorrências SAC, eliminando tarefas manuais, prevenindo envios duplicados e garantindo rastreabilidade completa das informações.
 
-O fluxo foi pensado para uso corporativo, com foco em rastreabilidade, clareza das informações e facilidade de manutenção do código.
+A automação integra um servidor SFTP, planilhas Excel e o Microsoft Outlook, processando dados históricos e atuais de forma confiável, mesmo em cenários onde o arquivo não é atualizado diariamente.
+
+O fluxo foi projetado para uso corporativo, com foco em segurança operacional, controle de duplicidade, auditoria e facilidade de manutenção.
 
 ---
 
 ## 🎯 Objetivo da Automação
 
-O principal objetivo deste projeto é automatizar o processo que anteriormente dependia de etapas manuais, como:
+Automatizar integralmente um processo que antes dependia de múltiplas etapas manuais, como:
 
-- Download diário de planilhas de ocorrências em servidor externo
-- Abertura e filtragem manual de dados no Excel
-- Identificação de contratos únicos
-- Criação de e-mail com tabela formatada
-- Anexação do arquivo filtrado e envio aos responsáveis
+Download de planilhas de ocorrências via servidor SFTP
 
-Com esta automação, todo esse processo é executado de forma automática, padronizada e segura, bastando apenas executar o script principal.
+Abertura e análise manual de dados no Excel
+
+Identificação de contratos válidos e únicos por dia
+
+Controle de contratos já enviados anteriormente
+
+Criação de e-mail com tabela formatada
+
+Anexação de arquivo Excel apenas quando aplicável
+
+Com esta automação, todo o processo ocorre de forma automática, padronizada e segura, bastando executar o script principal (ou deixá-lo agendado)
 
 ---
 
