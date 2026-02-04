@@ -2,3 +2,5 @@
 .env
 .venv/
 src/downloads/historico_processados.csv
+__pycache__/
+*.pyc
