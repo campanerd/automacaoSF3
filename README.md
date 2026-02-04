@@ -49,25 +49,25 @@ Caso não existam ocorrências para a data atual, o e-mail ainda é enviado, inf
 
 ## 🗂️ Estrutura do Projeto
 
-O projeto é organizado de forma modular, separando responsabilidades e facilitando manutenção e evolução do código.
+O projeto é organizado de forma modular, separando responsabilidades e facilitando manutenção, entendimento e evolução do código.
 
-- `main.py`  
-  Arquivo principal responsável por orquestrar toda a execução da automação.
+- `main.py`
+Arquivo principal responsável por orquestrar toda a execução da automação. Realiza a chamada dos serviços de download, processamento dos dados e envio do e-mail, funcionando como ponto central do fluxo.
 
-- `ftp_service.py`  
-  Contém a lógica de conexão com o servidor SFTP e o download do arquivo de ocorrências.
+- `ftp_service.py`
+Contém a lógica de conexão com o servidor SFTP, autenticação por credenciais externas e download automático do arquivo de ocorrências do mês corrente.
 
-- `filtre_service.py`  
-  Responsável pela leitura do Excel, tratamento dos dados, filtragem por data, remoção de duplicidades e geração do arquivo final.
+- `filtre_service.py`
+Responsável pela leitura da planilha Excel, tratamento e normalização dos dados, criação de chaves únicas, controle de histórico, filtragem de ocorrências válidas, remoção de contratos duplicados no mesmo dia e geração do arquivo Excel final.
 
-- `email_service.py`  
-  Responsável pela geração da tabela HTML e pelo envio do e-mail via Outlook.
+- `email_service.py`
+Responsável pela geração da tabela HTML a partir dos dados filtrados e pelo envio do e-mail via Microsoft Outlook. O e-mail é enviado mesmo quando não há ocorrências, informando explicitamente a ausência de contratos.
 
-- `src/downloads/`  
-  Diretório utilizado para armazenar temporariamente os arquivos baixados e gerados durante a execução.
+- `src/downloads/`
+Diretório utilizado para armazenar os arquivos baixados via SFTP, os arquivos Excel gerados pela automação e o histórico de ocorrências já processadas.
 
-- `.env`  
-  Arquivo de configuração contendo credenciais e parâmetros sensíveis (não versionado).
+- `.env`
+Arquivo de configuração contendo credenciais, endereços de e-mail e demais parâmetros sensíveis utilizados pela automação (não versionado).
 
 ---
 
