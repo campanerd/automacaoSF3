@@ -1,22 +1,30 @@
 # Automação de Ocorrências SAC – SF3
 
-Este projeto foi desenvolvido para automatizar o processo diário de coleta, filtragem e envio de ocorrências SAC, eliminando tarefas manuais e reduzindo erros operacionais. A automação realiza a integração entre um servidor SFTP, arquivos Excel e o Microsoft Outlook, garantindo que as ocorrências do dia sejam tratadas e encaminhadas de forma padronizada e confiável.
+Este projeto automatiza o processo diário de coleta, validação, rastreio e envio de ocorrências SAC, eliminando tarefas manuais, prevenindo envios duplicados e garantindo rastreabilidade completa das informações.
 
-O fluxo foi pensado para uso corporativo, com foco em rastreabilidade, clareza das informações e facilidade de manutenção do código.
+A automação integra um servidor SFTP, planilhas Excel e o Microsoft Outlook, processando dados históricos e atuais de forma confiável, mesmo em cenários onde o arquivo não é atualizado diariamente.
+
+O fluxo foi projetado para uso corporativo, com foco em segurança operacional, controle de duplicidade, auditoria e facilidade de manutenção.
 
 ---
 
 ## 🎯 Objetivo da Automação
 
-O principal objetivo deste projeto é automatizar o processo que anteriormente dependia de etapas manuais, como:
+Automatizar integralmente um processo que antes dependia de múltiplas etapas manuais, como:
 
-- Download diário de planilhas de ocorrências em servidor externo
-- Abertura e filtragem manual de dados no Excel
-- Identificação de contratos únicos
-- Criação de e-mail com tabela formatada
-- Anexação do arquivo filtrado e envio aos responsáveis
+Download de planilhas de ocorrências via servidor SFTP
 
-Com esta automação, todo esse processo é executado de forma automática, padronizada e segura, bastando apenas executar o script principal.
+Abertura e análise manual de dados no Excel
+
+Identificação de contratos válidos e únicos por dia
+
+Controle de contratos já enviados anteriormente
+
+Criação de e-mail com tabela formatada
+
+Anexação de arquivo Excel apenas quando aplicável
+
+Com esta automação, todo o processo ocorre de forma automática, padronizada e segura, bastando executar o script principal (ou deixá-lo agendado)
 
 ---
 
@@ -41,25 +49,25 @@ Caso não existam ocorrências para a data atual, o e-mail ainda é enviado, inf
 
 ## 🗂️ Estrutura do Projeto
 
-O projeto é organizado de forma modular, separando responsabilidades e facilitando manutenção e evolução do código.
+O projeto é organizado de forma modular, separando responsabilidades e facilitando manutenção, entendimento e evolução do código.
 
-- `main.py`  
-  Arquivo principal responsável por orquestrar toda a execução da automação.
+- `main.py`
+Arquivo principal responsável por orquestrar toda a execução da automação. Realiza a chamada dos serviços de download, processamento dos dados e envio do e-mail, funcionando como ponto central do fluxo.
 
-- `ftp_service.py`  
-  Contém a lógica de conexão com o servidor SFTP e o download do arquivo de ocorrências.
+- `ftp_service.py`
+Contém a lógica de conexão com o servidor SFTP, autenticação por credenciais externas e download automático do arquivo de ocorrências do mês corrente.
 
-- `filtre_service.py`  
-  Responsável pela leitura do Excel, tratamento dos dados, filtragem por data, remoção de duplicidades e geração do arquivo final.
+- `filtre_service.py`
+Responsável pela leitura da planilha Excel, tratamento e normalização dos dados, criação de chaves únicas, controle de histórico, filtragem de ocorrências válidas, remoção de contratos duplicados no mesmo dia e geração do arquivo Excel final.
 
-- `email_service.py`  
-  Responsável pela geração da tabela HTML e pelo envio do e-mail via Outlook.
+- `email_service.py`
+Responsável pela geração da tabela HTML a partir dos dados filtrados e pelo envio do e-mail via Microsoft Outlook. O e-mail é enviado mesmo quando não há ocorrências, informando explicitamente a ausência de contratos.
 
-- `src/downloads/`  
-  Diretório utilizado para armazenar temporariamente os arquivos baixados e gerados durante a execução.
+- `src/downloads/`
+Diretório utilizado para armazenar os arquivos baixados via SFTP, os arquivos Excel gerados pela automação e o histórico de ocorrências já processadas.
 
-- `.env`  
-  Arquivo de configuração contendo credenciais e parâmetros sensíveis (não versionado).
+- `.env`
+Arquivo de configuração contendo credenciais, endereços de e-mail e demais parâmetros sensíveis utilizados pela automação (não versionado).
 
 ---
 
@@ -73,14 +81,3 @@ O projeto foi desenvolvido utilizando as seguintes tecnologias e bibliotecas:
 - win32com para integração com Microsoft Outlook
 - python-dotenv para gerenciamento de variáveis de ambiente
 - Excel como formato de entrada e saída de dados
-
----
-
-## 🛠️ Configuração do Ambiente
-
-Antes de executar o projeto, é necessário configurar o ambiente.
-
-Instale as dependências do projeto:
-
-```bash
-pip install pandas python-dotenv paramiko pywin32 openpyxl xlrd
