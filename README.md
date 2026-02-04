@@ -38,10 +38,7 @@ Em seguida, o arquivo Excel é lido utilizando a biblioteca Pandas. A automaçã
 
 Após o processamento, é gerado um novo arquivo Excel contendo apenas as ocorrências válidas do dia. Paralelamente, esses mesmos dados são convertidos em uma tabela HTML, formatada para ser exibida corretamente no corpo de um e-mail.
 
-Por fim, a automação cria e envia um e-mail pelo Microsoft Outlook, contendo:
-- Um texto padrão explicativo
-- A tabela HTML com as ocorrências do dia
-- O arquivo Excel filtrado em anexo
+Por fim, a automação cria e envia um e-mail pelo Microsoft Outlook, contendo: texto padrão explicativo, a tabela HTML com as ocorrências do dia e o arquivo Excel filtrado em anexo
 
 Caso não existam ocorrências para a data atual, o e-mail ainda é enviado, informando explicitamente que não há contratos para tratamento naquele dia.
 
