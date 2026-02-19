@@ -18,7 +18,7 @@ def generate_html(df):
         print("Nenhum contrato encontrado para o dia de hoje.")
 
         return """
-        <p><b>Não há contratos para tratamento na data de hoje.</b></p>
+        <p><b>Não foram encontrados contratos que devam ser alterados.</b></p>
         """
 
     tabela = df.to_html(index=False, border=1, justify="center")
