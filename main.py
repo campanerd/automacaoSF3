@@ -39,13 +39,13 @@ def main():
 
 
 if __name__ == "__main__":
-    schedule.every().monday.at("18:50").do(main)
-    schedule.every().tuesday.at("18:50").do(main)
-    schedule.every().wednesday.at("18:50").do(main)
-    schedule.every().thursday.at("18:57").do(main)
-    schedule.every().friday.at("18:50").do(main)
+    schedule.every().monday.at("12:00").do(main)
+    schedule.every().tuesday.at("12:00").do(main)
+    schedule.every().wednesday.at("12:00").do(main)
+    schedule.every().thursday.at("12:00").do(main)
+    schedule.every().friday.at("12:00").do(main)
 
-    print("Agendador iniciado. Aguardando execução às 19:00...")
+    print("Agendador iniciado. Aguardando execução às 12:00...")
     
     while True:
         schedule.run_pending()
