@@ -66,7 +66,7 @@ def send_email(html, anexo):
     mail.CC = EMAIL_CC or ""
 
     mail.HTMLBody = f"""
-    <p>Boa noite Camila,</p>
+    <p>Boa tarde Camila,</p>
 
     <p>Seguem abaixo o resultado do monitoramento do dia
     <b>{hoje.strftime('%d/%m/%Y')}</b>:</p>
